@@ -19,8 +19,8 @@ RUN    wget http://openresty.org/download/ngx_openresty-1.9.3.1.tar.gz \
   && tar xvfz ngx_openresty-1.9.3.1.tar.gz \
   && cd ngx_openresty-1.9.3.1 \
   && ./configure --with-luajit  --with-http_addition_module --with-http_dav_module \
-        --with-http_geoip_module --with-http_gzip_static_module --with-http_image_filter_module
-        --with-http_realip_module --with-http_stub_status_module --with-http_ssl_module
+        --with-http_geoip_module --with-http_gzip_static_module --with-http_image_filter_module \
+        --with-http_realip_module --with-http_stub_status_module --with-http_ssl_module \
         --with-http_sub_module --with-ipv6 --with-pcre-jit \
   && make \
   && make install \
