@@ -13,8 +13,7 @@ RUN    apt-get upgrade -y
 RUN    apt-get -y install wget
 
 # Openresty (Nginx)
-RUN    apt-get -y build-dep nginx \
-  && apt-get -q -y clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
+RUN    apt-get -y build-dep nginx
 RUN    wget http://openresty.org/download/ngx_openresty-1.9.3.1.tar.gz \
   && tar xvfz ngx_openresty-1.9.3.1.tar.gz \
   && cd ngx_openresty-1.9.3.1 \
@@ -26,7 +25,9 @@ RUN    wget http://openresty.org/download/ngx_openresty-1.9.3.1.tar.gz \
   && make install \
   && rm -rf /ngx_openresty*
 
-RUN apt-get update && apt-get autoremove $(apt-cache showsrc nginx | sed -e '/Build-Depends/!d;s/Build-Depends: \|,\|([^)]*),*\|\[[^]]*\]//g')
+RUN apt-get -q -y autoremove $(apt-cache showsrc nginx | sed -e '/Build-Depends/!d;s/Build-Depends: \|,\|([^)]*),*\|\[[^]]*\]//g')  \
+  && apt-get -q -y clean \
+  && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 EXPOSE 8080
 CMD /usr/local/openresty/nginx/sbin/nginx -p `pwd` -c nginx.conf
