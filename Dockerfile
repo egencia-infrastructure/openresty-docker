@@ -25,7 +25,7 @@ RUN    wget http://openresty.org/download/ngx_openresty-1.9.3.1.tar.gz \
   && make install \
   && rm -rf /ngx_openresty*
 
-RUN apt-get -q -y autoremove $(apt-cache showsrc nginx | sed -e '/Build-Depends/!d;s/Build-Depends: \|,\|([^)]*),*\|\[[^]]*\]//g')  \
+RUN apt-get -q -y autoremove $(apt-cache showsrc nginx | sed -e '/Build-Depends/!d;s/Build-Depends: \|,\|([^)]*),*\|\[[^]]*\]//g' | sed -e 's/|//g' |uniq)  \
   && apt-get -q -y clean \
   && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
